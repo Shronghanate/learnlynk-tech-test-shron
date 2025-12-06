@@ -1,1 +1,4 @@
 # learnlynk-tech-test-shron
+
+## Stripe Answer
+To set up Stripe Checkout for an application fee, I would start by creating a new row in a payment_requests table whenever the user begins the payment process. This row would include the application ID, amount, and a status like “pending.” After creating that entry, I would call Stripe’s API to create a Checkout Session and pass the payment request ID and application ID in the session metadata. I would store the Stripe session ID and the Checkout URL in the database so I can track the payment. The user is then redirected to the Stripe-hosted payment page. When the payment is completed, Stripe sends a webhook to my server. In that webhook handler, I verify the event came from Stripe and then update the payment_requests row to “paid.” Finally, I update the related application’s stage (for example, marking it as “payment received”) so the system knows the fee has been successfully paid.
